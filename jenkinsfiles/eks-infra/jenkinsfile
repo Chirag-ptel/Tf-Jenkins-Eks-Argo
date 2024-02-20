@@ -58,8 +58,8 @@ pipeline {
                             } else if (params.'Terraform-Action' == 'destroy') {
                                 sh "terraform destroy -auto-approve -var-file=${params.'File-Name'}"
                             } else if (params.'Terraform-Action' == 'plan') {
-                            }   sh "terraform plan -var-file=${params.'File-Name'}"
-                            else {
+                               sh "terraform plan -var-file=${params.'File-Name'}"
+                            } else {
                                 error "Invalid value for Terraform-Action: ${params.'Terraform-Action'}"
                             }
                         }
