@@ -16,7 +16,7 @@ pipeline {
         stage('Initializing Terraform') {
             steps {
                 withAWS(credentials: 'aws-key', region: 'ap-south-1') {
-                dir('EKS-TF') {
+                dir('terraform/eks') {
                     script {
                         sh 'terraform init'
                     }
@@ -27,7 +27,7 @@ pipeline {
         stage('Validate Terraform Code') {
             steps {
                 withAWS(credentials: 'aws-key', region: 'ap-south-1') {
-                dir('EKS-TF') {
+                dir('terraform/eks') {
                     script {
                         sh 'terraform validate'
                     }
@@ -38,7 +38,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 withAWS(credentials: 'aws-key', region: 'ap-south-1') {
-                dir('EKS-TF') {
+                dir('terraform/eks') {
                     script {
                         sh "terraform plan -var-file=${params.'File-Name'}"
                     }
@@ -51,14 +51,14 @@ pipeline {
                 withAWS(credentials: 'aws-key', region: 'ap-south-1') { 
                 script {
                     echo "${params.'Terraform-Action'}"
-                    dir('EKS-TF') {
+                    dir('terraform/eks') {
                         script {
                             if (params.'Terraform-Action' == 'apply') {
                                 sh "terraform apply -auto-approve -var-file=${params.'File-Name'}"
                             } else if (params.'Terraform-Action' == 'destroy') {
                                 sh "terraform destroy -auto-approve -var-file=${params.'File-Name'}"
                             } else if (params.'Terraform-Action' == 'plan') {
-                                sh "terraform plan -var-file=${params.'File-Name'}"
+                            }   sh "terraform plan -var-file=${params.'File-Name'}"
                             else {
                                 error "Invalid value for Terraform-Action: ${params.'Terraform-Action'}"
                             }
