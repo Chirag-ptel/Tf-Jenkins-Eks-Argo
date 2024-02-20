@@ -1,7 +1,0 @@
-iam-role-eks        = "my-iam-role-eks"
-iam-role-node       = "my-iam-role-ec2"
-iam-policy-eks      = "my-iam-policy-eks"
-iam-policy-node     = "my-iam-policy-node"
-cluster-name        = "my-EKS-Cluster"
-eksnode-group-name  = "my-Node-Group"
-region              = "ap-south-1"
